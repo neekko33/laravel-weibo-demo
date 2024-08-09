@@ -6,7 +6,7 @@ use Faker\Factory;
 use Illuminate\View\View;
 use PHPUnit\TextUI\Application;
 
-class StaticPagesController extends Controller
+class StaticPagesController
 {
     public function home(): View|Application|Factory
     {

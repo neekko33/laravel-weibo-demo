@@ -44,4 +44,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get Gravatar image
+     * @param string $size
+     * @return string
+     */
+    public function gravatar(string $size = '100'): string
+    {
+        $hash = md5(strtolower(trim($this->attributes['email'])));
+        return "https://www.gravatar.com/avatar/$hash?s=$size";
+    }
 }

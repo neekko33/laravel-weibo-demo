@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store', 'index']
         ]);
 
         $this->middleware('guest', [
@@ -78,5 +78,11 @@ class UsersController extends Controller
         session()->flash('success', 'User updated successfully');
 
         return redirect()->route('users.show', [$user]);
+    }
+
+    public function index(): View|Application|Factory
+    {
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 }

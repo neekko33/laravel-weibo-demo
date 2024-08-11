@@ -23,7 +23,7 @@ class SessionsController
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             session()->flash('success', 'You are now logged in');
             return redirect()->route('users.show', [Auth::user()]);
         } else {

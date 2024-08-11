@@ -31,13 +31,37 @@ class UsersController
         ]);
 
         $user = User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>bcrypt($request->password)
+            'name'=>$request['name'],
+            'email'=>$request['email'],
+            'password'=>bcrypt($request['password'])
         ]);
 
         Auth::login($user);
         session()->flash('success', 'User created successfully');
+        return redirect()->route('users.show', [$user]);
+    }
+
+    public function edit(User $user): View|Application|Factory
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    public function update(User $user, Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|max:50',
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+
+        $data = [];
+        $data['name'] = $request['name'];
+        if ($request['password']) {
+            $data['password'] = bcrypt($request['password']);
+        }
+        $user->update($data);
+
+        session()->flash('success', 'User updated successfully');
+
         return redirect()->route('users.show', [$user]);
     }
 }

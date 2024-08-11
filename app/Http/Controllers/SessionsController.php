@@ -31,4 +31,10 @@ class SessionsController
             return redirect()->back()->withInput();
         }
     }
+
+    public function destroy(): RedirectResponse
+    {
+        Auth::logout();
+        return redirect()->route('home');
+    }
 }

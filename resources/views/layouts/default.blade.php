@@ -17,5 +17,6 @@
     @include('layouts._footer')
   </div>
 </div>
+@vite(['resources/js/app.js'])
 </body>
 </html>

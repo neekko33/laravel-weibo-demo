@@ -6,6 +6,7 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use PHPUnit\TextUI\Application;
 
@@ -35,6 +36,7 @@ class UsersController
             'password'=>bcrypt($request->password)
         ]);
 
+        Auth::login($user);
         session()->flash('success', 'User created successfully');
         return redirect()->route('users.show', [$user]);
     }

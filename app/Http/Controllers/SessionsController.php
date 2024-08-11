@@ -35,6 +35,7 @@ class SessionsController
     public function destroy(): RedirectResponse
     {
         Auth::logout();
-        return redirect()->route('home');
+        session()->flash('success', 'You are now logged out');
+        return redirect('login');
     }
 }

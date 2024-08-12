@@ -7,10 +7,18 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class SessionsController
+class SessionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     public function create(): View|Factory|Application
     {
         return view('sessions.create');
@@ -25,7 +33,8 @@ class SessionsController
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             session()->flash('success', 'You are now logged in');
-            return redirect()->route('users.show', [Auth::user()]);
+            $fallback = route('users.show', [Auth::user()]);
+            return redirect()->intended($fallback);
         } else {
             session()->flash('danger', 'email or password is incorrect');
             return redirect()->back()->withInput();

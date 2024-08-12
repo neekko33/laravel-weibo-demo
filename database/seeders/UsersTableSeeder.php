@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -18,6 +17,7 @@ class UsersTableSeeder extends Seeder
         $user = User::find(1);
         $user->name = 'Neekko33';
         $user->email = 'neekko33@outlook.com';
+        $user->is_admin = true;
         $user->save();
     }
 }

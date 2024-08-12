@@ -85,4 +85,12 @@ class UsersController extends Controller
         $users = User::paginate(6);
         return view('users.index', compact('users'));
     }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        Gate::authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', 'User deleted successfully');
+        return back();
+    }
 }

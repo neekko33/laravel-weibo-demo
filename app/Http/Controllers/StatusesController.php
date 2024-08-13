@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Status;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class StatusesController extends Controller
 {
@@ -28,8 +29,10 @@ class StatusesController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Status $status)
+    public function destroy(Status $status): RedirectResponse
     {
-
+        $status->delete();
+        session()->flash('success', 'Status deleted successfully');
+        return redirect()->back();
     }
 }

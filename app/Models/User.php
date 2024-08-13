@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property mixed $id
+ * @property mixed $followings
+ * @property mixed $name
+ * @method static create(array $array)
+ * @method static paginate(int $int)
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -63,9 +70,12 @@ class User extends Authenticatable
         return "https://www.gravatar.com/avatar/$hash?s=$size";
     }
 
-    public function feed(): HasMany
+    public function feed()
     {
-        return $this->statuses()
+        $user_ids = $this->followings()->get()->pluck('id')->toArray();
+        $user_ids = [...$user_ids, $this->id];
+        return Status::whereIn('user_id', $user_ids)
+            ->with('user')
             ->orderBy('created_at', 'desc');
     }
 

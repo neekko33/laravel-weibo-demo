@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Status;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class StatusesController extends Controller
 {

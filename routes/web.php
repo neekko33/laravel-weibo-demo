@@ -18,3 +18,6 @@ Route::post('login', [SessionsController::class, 'store'])->name('login');
 Route::delete('logout', [SessionsController::class, 'destroy'])->name('logout');
 
 Route::resource('statuses', StatusesController::class, ['only' => ['store', 'destroy']]);
+
+Route::get('/users/{user}/followings', [UsersController::class, 'followings'])->name('users.followings');
+Route::get('/users/{user}/followers', [UsersController::class, 'followers'])->name('users.followers');
